@@ -44,17 +44,17 @@ contract SuperApp
 	/*************************
 		Delete Member
 	**************************/
-	function deleteMember () public returns (bool)
-	{
+	// function deleteMember () public returns (bool)
+	// {
 
-	}
+	// }
 
 	/*************************
 		Verify membership
 	**************************/
-	function isMember () public returns (bool)
-	{
+	// function isMember () public returns (bool)
+	// {
 
-	}
+	// }
 
 }

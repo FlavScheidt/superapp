@@ -1,4 +1,4 @@
-pragma solidity ^0.6.4;
+pragma solidity ^0.7.0;
 
 /*************************
  Global
@@ -22,7 +22,10 @@ contract MemberApp
 	**************************/
 	function memberApp(bytes16 publicKey, bytes32[] encAddress, bytes16 encSignature, address memberAppOwner) public
 	{
-
+		_memberapp.publicKey 		= publicKey;
+		_memberapp.encAddress 		= encAddress;
+		_memberapp.encSignature 	= encSignature;
+		_memberapp.memberAppOwner 	= memberAppOwner;
 	}
 
 	
