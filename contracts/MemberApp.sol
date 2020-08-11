@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.7.0;
 
 /*************************
@@ -20,7 +21,9 @@ contract MemberApp
 	/*************************
 	 Constructor
 	**************************/
-	function memberApp(bytes16 publicKey, bytes32[] encAddress, bytes16 encSignature, address memberAppOwner) public
+	//OBS.: necessary to add the storage location for the bytes32 array
+	//Used memory, cause it is volatile and cheap
+	constructor (bytes16 publicKey, bytes32[4] memory encAddress, bytes16 encSignature, address memberAppOwner)
 	{
 		_memberapp.publicKey 		= publicKey;
 		_memberapp.encAddress 		= encAddress;

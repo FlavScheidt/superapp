@@ -1,12 +1,22 @@
 {
-  "name": "app",
+  "name": "superapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "SuperApp smart contracts implementations",
   "private": true,
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FlavScheidt/superapp.git"
+  },
+  "author": "Flaviene Scheidt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FlavScheidt/superapp/issues"
+  },
+  "homepage": "https://github.com/FlavScheidt/superapp#readme",
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.5",
     "webpack": "^4.41.2",
@@ -14,6 +24,11 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
+    "ganache": "^6.4.4",
+    "ganache-cli": "^6.9.1",
+    "solc": "^0.7.0",
+    "truffle": "^5.1.37",
     "web3": "^1.2.4"
   }
 }
+
