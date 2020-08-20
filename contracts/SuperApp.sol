@@ -9,7 +9,7 @@ contract SuperApp
 		List of member apps
 	**************************/
 	//We store only the address of the smart contract and map to its status
-	mapping (address => memberStatus) public memberApps;
+	mapping (address => memberStatus) private memberApps;
 
 	/*************************
 		Structs and other variables
@@ -20,7 +20,6 @@ contract SuperApp
 	**************************/
 	constructor ()
 	{
-
 	}
 
 	/*************************
@@ -42,6 +41,7 @@ contract SuperApp
 		return newContractAddress;
 	}
 
+
 	/*************************
 		Delete Member
 	**************************/
@@ -53,9 +53,9 @@ contract SuperApp
 	/*************************
 		Verify membership
 	**************************/
-	// function isMember () public returns (bool)
-	// {
-
-	// }
+	function isMember (address memberApp) public returns (memberStatus)
+	{
+		return memberApps[memberApp];
+	}
 
 }
