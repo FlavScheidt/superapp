@@ -44,7 +44,7 @@ contract SuperApp
 	function deleteMember (address memberApp) public
 	{
 		//The contract exists? Is it active?
-		require(isMember(memberApp) == Active, "The contract does not exists or is inactive. Inactive contracts cannot be reactivate.");
+		require(isMember(memberApp) == memberStatus.Active, "The contract does not exists or is inactive. Inactive contracts cannot be reactivate.");
 
 		//Is the message sender the owner of the contract?
 		//If in the future we need to give permission to a regulator to deactivate contracts, that shall be done HERE
@@ -58,7 +58,7 @@ contract SuperApp
 	/*************************
 		Verify membership
 	**************************/
-	function isMember (address memberApp) public returns (memberStatus)
+	function isMember (address memberApp) public view returns (memberStatus)
 	{
 		return memberApps[memberApp];
 	}

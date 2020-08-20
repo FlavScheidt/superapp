@@ -36,41 +36,41 @@ contract MemberApp
 		_memberapp.encAddress 		= encAddress;
 		_memberapp.encSignature 	= encSignature;
 		_memberapp.memberAppOwner 	= memberAppOwner;
-		_memberapp.memberStatus		= Active;
+		_memberapp.status   		= memberStatus.Active;
 		_memberapp.superAppAddress	= msg.sender;
 	}
 
 	/*************************
 	 Getters
 	**************************/
-	function getPublicKey() public returns(bytes16)
+	function getPublicKey() public view returns(bytes16)
 	{
 		return _memberapp.publicKey;
 	}
 
-	function getEncAddress() pubic returns(bytes16[32])
+	function getEncAddress() public view returns(bytes32[32] memory)
 	{
 		return _memberapp.encAddress;
 	}
 
-	function getEncSignature() public returns(bytes16)
+	function getEncSignature() public view returns(bytes16)
 	{
 		return _memberapp.encSignature;
 	}
 
-	function getOwner() public returns(address)
+	function getOwner() public view returns(address)
 	{
 		return _memberapp.memberAppOwner;
 	}
 
-	function getStatus() public returns(memberStatus)
+	function getStatus() public view returns(memberStatus)
 	{
-		return status;
+		return _memberapp.status;
 	}
 
-	function getSuperApp() public returns(address)
+	function getSuperApp() public view returns(address)
 	{
-		return superAppAddress;
+		return _memberapp.superAppAddress;
 	}
 
 	/*************************
@@ -80,7 +80,7 @@ contract MemberApp
 	{
 		//Only the superapp have power to deactivate the member app
 		require(msg.sender == getSuperApp(), "Call the super app to deactivate this member app. If you are not the owner of this app you will not be able to do so");
-		_memberapp.status = Inactive;
+		_memberapp.status = memberStatus.Inactive;
 	}
 
 	/*************************
@@ -92,15 +92,15 @@ contract MemberApp
 	//It will get inefficient when put on production
 	function givePermission(address app) public 
 	{
-		usersPermissions[msg.sender][app] = 1;
+		usersPermissions[msg.sender][app] = true;
 	}
 
 	function revokePermission(address app) public
 	{
-		usersPermissions[msg.sender][app] = 0;
+		usersPermissions[msg.sender][app] = false;
 	}
 
-	function getPermission(address user, address app) public returns (bool)
+	function getPermission(address user, address app) public view returns (bool)
 	{
 		return usersPermissions[user][app];
 	}
