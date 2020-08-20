@@ -12,15 +12,11 @@ contract SuperApp
 	mapping (address => memberStatus) private memberApps;
 
 	/*************************
-		Structs and other variables
-	**************************/
-
-	/*************************
 		Constructor
 	**************************/
-	constructor ()
-	{
-	}
+	// constructor ()
+	// {
+	// }
 
 	/*************************
 		Register new Member
@@ -45,10 +41,19 @@ contract SuperApp
 	/*************************
 		Delete Member
 	**************************/
-	// function deleteMember () public returns (bool)
-	// {
+	function deleteMember (address memberApp) public
+	{
+		//The contract exists? Is it active?
+		require(isMember(memberApp) == Active, "The contract does not exists or is inactive. Inactive contracts cannot be reactivate.");
 
-	// }
+		//Is the message sender the owner of the contract?
+		//If in the future we need to give permission to a regulator to deactivate contracts, that shall be done HERE
+		MemberApp _memberapp = MemberApp(memberApp);
+		require(msg.sender == _memberapp.getOwner(), "You are not the owner of this member app. Only the owner can deactivate the member app");
+
+		_memberapp.deactivate();
+
+	}
 
 	/*************************
 		Verify membership
