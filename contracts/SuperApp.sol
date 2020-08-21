@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.0;
+pragma solidity >=0.7.0 <0.8.0;
 
 import "./MemberApp.sol";
 
@@ -10,6 +10,8 @@ contract SuperApp
 	**************************/
 	//We store only the address of the smart contract and map to its status
 	mapping (address => memberStatus) private memberApps;
+	address[] internal memberAddress;
+	uint nMembers;
 
 	/*************************
 		Constructor
@@ -33,6 +35,8 @@ contract SuperApp
 		address newContractAddress = address(_memberapp);
 		//Insert address on the list
 		memberApps[newContractAddress] = memberStatus.Active;
+
+		memberAddress.push();
 
 		return newContractAddress;
 	}
@@ -61,6 +65,33 @@ contract SuperApp
 	function isMember (address memberApp) public view returns (memberStatus)
 	{
 		return memberApps[memberApp];
+	}
+
+	/*************************
+		Return list of memberapps
+	**************************/
+	function listMembers() public view returns (address[])
+	{
+		return memberAddress;
+	}
+
+	/*************************
+		Return list of active memberapps
+	**************************/
+	//Dirty and ugly solution, but it works 
+	function listActiveMembers() public view returns (address[])
+	{
+		address[] activeMembers;
+		for (uint i=0; i<nMembers; i++)
+		{
+			if (ismember(memberAddress[i]) == memberStatus.Active)
+			{
+				activeMembers.push(memberAddress[i]);
+			}
+
+		}
+
+		return activeMembers;
 	}
 
 }

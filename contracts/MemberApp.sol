@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.0;
+pragma solidity >=0.7.0 <0.8.0;
 
 /*************************
  Global
@@ -16,11 +16,12 @@ struct memberApp
 	address superAppAddress; //Superapp this member belongs to
 }
 
+
 contract MemberApp
 {
 	memberApp private _memberapp;
 
-	//Thats the lost of users permissions
+	//Thats the list of users permissions
 	//Please read the Permissions section above
 	//Basically we map the address of an user to the address of an app and use a bool to set or unset the permissions
 	mapping (address => mapping (address => bool)) usersPermissions;
@@ -87,7 +88,7 @@ contract MemberApp
 	 Permissioning
 	**************************/
 	//Ugliest way to do so, but also the fast right now
-	//Thats actually a big to do in this context, cause we need to think on a more effiecient way to do it
+	//Thats actually a big to do in this context, cause we need to think on a more efficient way to do it
 	//Here we are storing all the permissions every user gave to OTHER member apps to access data
 	//It will get inefficient when put on production
 	function givePermission(address app) public 
@@ -100,9 +101,14 @@ contract MemberApp
 		usersPermissions[msg.sender][app] = false;
 	}
 
-	function getPermission(address user, address app) public view returns (bool)
+	function getPermission(address user, address app) public view returns(bool)
 	{
 		return usersPermissions[user][app];
+	}
+
+	function listPermissions(address user) public view returns (address[])
+	{
+		
 	}
 	
 }
