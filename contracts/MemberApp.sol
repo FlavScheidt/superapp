@@ -106,9 +106,9 @@ contract MemberApp
 		return usersPermissions[user][app];
 	}
 
-	function listPermissions(address user) public view returns (address[])
-	{
+	// function listPermissions(address user) public view returns (address[])
+	// {
 		
-	}
+	// }
 	
 }
