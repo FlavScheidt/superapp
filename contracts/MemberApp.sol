@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.8.0;
+pragma solidity >=0.6.0 <=0.7.0;
 
 /*************************
  Global
@@ -8,7 +8,7 @@ enum memberStatus { NotSet, Active, Inactive }
 struct memberApp
 {
 	bytes16 publicKey;
-	bytes32 [32] encAddress; //Bytes32 is more efficient and cheap than trings because they dont carry the UTF-8 enconding
+	string encAddress; //Bytes32 is more efficient and cheap than trings because they dont carry the UTF-8 enconding. But it got some problems. And since we are trying to facilitate everything...
 	bytes16 encSignature;
 	// address memberAppAddress;
 	address memberAppOwner; //When creating a new member app, that's the caller address
@@ -31,7 +31,7 @@ contract MemberApp
 	**************************/
 	//OBS.: necessary to add the storage location for the bytes32 array
 	//Used memory, cause it is volatile and cheap
-	constructor (bytes16 publicKey, bytes32[4] memory encAddress, bytes16 encSignature, address memberAppOwner)
+	constructor (bytes16 publicKey, string memory encAddress, bytes16 encSignature, address memberAppOwner) public
 	{
 		_memberapp.publicKey 		= publicKey;
 		_memberapp.encAddress 		= encAddress;
@@ -49,7 +49,7 @@ contract MemberApp
 		return _memberapp.publicKey;
 	}
 
-	function getEncAddress() public view returns(bytes32[32] memory)
+	function getEncAddress() public view returns(string memory)
 	{
 		return _memberapp.encAddress;
 	}

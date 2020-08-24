@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.8.0;
+pragma solidity >=0.6.0 <=0.7.0;
 
 import "./MemberApp.sol";
 
@@ -16,9 +16,27 @@ contract SuperApp
 	/*************************
 		Constructor
 	**************************/
-	// constructor ()
-	// {
-	// }
+	constructor () public
+	{
+		nMembers = 0;
+	}
+
+	/*************************
+		Convert strings to bytes
+	**************************/
+	//I didnt write this. Source is https://ethereum.stackexchange.com/a/9152/63251
+	//Just adapted to bytes16
+	function stringToBytes16(string memory source) public pure returns (bytes16 result) 
+	{
+	    bytes memory tempEmptyStringTest = bytes(source);
+	    if (tempEmptyStringTest.length == 0) {
+	        return 0x0;
+	    }
+
+	    assembly {
+	        result := mload(add(source, 16))
+	    }
+	}
 
 	/*************************
 		Register new Member
@@ -26,10 +44,10 @@ contract SuperApp
 	//This function receives the information about a memberApp to be add
 	//Creates a new smart contract and returns it`s address
 	//The adress of the contract must be stored here, with its status
-	function newMember (bytes16 publicKey, bytes32[4] memory encAddress, bytes16 encSignature) public returns (address)
+	function newMember (string memory publicKey, string memory encAddress, string memory encSignature) public returns (address)
 	{
 		address owner = msg.sender;
-		MemberApp _memberapp = new MemberApp(publicKey, encAddress, encSignature, owner);
+		MemberApp _memberapp = new MemberApp(stringToBytes16(publicKey), encAddress, stringToBytes16(encSignature), owner);
 
 		//Get the address of the contract created
 		address newContractAddress = address(_memberapp);
@@ -37,6 +55,7 @@ contract SuperApp
 		memberApps[newContractAddress] = memberStatus.Active;
 
 		memberAddress.push();
+		nMembers++;
 
 		return newContractAddress;
 	}
@@ -70,7 +89,7 @@ contract SuperApp
 	/*************************
 		Return list of memberapps
 	**************************/
-	function listMembers() public view returns (address[])
+	function listMembers() public view returns (address[] memory)
 	{
 		return memberAddress;
 	}
@@ -79,14 +98,16 @@ contract SuperApp
 		Return list of active memberapps
 	**************************/
 	//Dirty and ugly solution, but it works 
-	function listActiveMembers() public view returns (address[])
+	function listActiveMembers() public view returns (address[] memory)
 	{
-		address[] activeMembers;
+		address[] memory activeMembers;
+		uint y=0;
 		for (uint i=0; i<nMembers; i++)
 		{
-			if (ismember(memberAddress[i]) == memberStatus.Active)
+			if (isMember(memberAddress[i]) == memberStatus.Active)
 			{
-				activeMembers.push(memberAddress[i]);
+				activeMembers[y]=memberAddress[i];
+				y++;
 			}
 
 		}
